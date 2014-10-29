@@ -24,20 +24,21 @@ module Geocoder::Lookup
       when 0
         return [doc['result']] unless doc['result'].blank?
       when 1, 3, 4
-        raise_error(Geocoder::Error, "server error.") ||
-          warn("Baidu Geocoding API error: server error.")
+	debugger
+        raise_error(Geocoder::Error, "server error." + url_query_string(query)) ||
+          warn("Baidu Geocoding API error: server error." + url_query_string(query))
       when 2
-        raise_error(Geocoder::InvalidRequest, "invalid request.") ||
-          warn("Baidu Geocoding API error: invalid request.")
+        raise_error(Geocoder::InvalidRequest, "invalid request." + url_query_string(query)) ||
+          warn("Baidu Geocoding API error: invalid request." + url_query_string(query))
       when 5
-        raise_error(Geocoder::InvalidApiKey, "invalid api key") ||
-          warn("Baidu Geocoding API error: invalid api key.")
+        raise_error(Geocoder::InvalidApiKey, "invalid api key" + url_query_string(query)) ||
+          warn("Baidu Geocoding API error: invalid api key." + url_query_string(query))
       when 101, 102, 200..299
-        raise_error(Geocoder::RequestDenied, "request denied") ||
-          warn("Baidu Geocoding API error: request denied.")
+        raise_error(Geocoder::RequestDenied, "request denied" + url_query_string(query)) ||
+          warn("Baidu Geocoding API error: request denied." + url_query_string(query))
       when 300..399
-        raise_error(Geocoder::OverQueryLimitError, "over query limit.") ||
-          warn("Baidu Geocoding API error: over query limit.")
+        raise_error(Geocoder::OverQueryLimitError, "over query limit." + url_query_string(query)) ||
+          warn("Baidu Geocoding API error: over query limit." + url_query_string(query))
       end
       return []
     end
