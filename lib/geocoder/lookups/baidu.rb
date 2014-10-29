@@ -24,7 +24,6 @@ module Geocoder::Lookup
       when 0
         return [doc['result']] unless doc['result'].blank?
       when 1, 3, 4
-	debugger
         raise_error(Geocoder::Error, "server error." + url_query_string(query)) ||
           warn("Baidu Geocoding API error: server error." + url_query_string(query))
       when 2
